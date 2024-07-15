@@ -1,0 +1,36 @@
+.movieList h1{
+    position: fixed;
+    top: 0;
+    left: 40%;
+}
+.vote_count{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.movieCardsMain{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 80%;
+    height: 80vh;
+    overflow-y: scroll;
+    margin: 5rem auto 0 auto;
+}
+.movieCard{
+    width: 220px;
+    border: 1px solid;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.movieImage{
+    width: 100%;
+    height: 100px;
+}
+p, h5{
+    margin: 0 ;
+    margin-bottom: 5px !important;
+}
+p{
+    font-size: 13px;
+}

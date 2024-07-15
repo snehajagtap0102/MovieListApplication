@@ -1,63 +1,71 @@
-import React, { useEffect, useState } from 'react'
-import './AllMoviesShows.css'
+import React, { useEffect, useState } from 'react';
+import { getAPICall } from './APIMethods';
+import './MovieList.css'
 
 const AllMovieShows = () => {
-    const [allMovieList, setAllMovieList] = useState([]);
-    const [allYearList, setAllYearList] = useState([])
-    useEffect(() => {
-        fetch("https://freetestapi.com/api/v1/movies ").then((res) => {
-            return res.json();
-        }).then((resp) => {
-            setAllMovieList(resp);
-            console.log("resp", resp)
-            const tempYears = [];
-            resp.map((movie)=>{
-                  tempYears.push(movie.year)
-                  
-              }
-            )
-            const uniqueTempYears = [...new Set(tempYears)]
-                  console.log("uniqueTempYears", uniqueTempYears);
-            setAllYearList(uniqueTempYears.sort())
+  const [movieList, setMovieList] = useState([]);
+  const [year, setYear] = useState(2012);
 
-        }).catch((err) => {
-            console.log(err.message);
-        })
-    }, [])
+  const fetchMovies = () => {
+      getAPICall(`https://api.themoviedb.org/3/discover/movie?api_key=5ed4c7ff1d925b6ee96d3feb04055f95&sort_by=popularity.desc&primary_release_year=${year}&page=1&vote_count.gte=100`)
+          .then((response) => {
+              console.log("Res....", response);
+              setMovieList(response.results);
+          })
+          .catch((error) => {
+              console.error("Error fetching data:", error);
+          });
+  };
 
-    // console.log("AllYearList", allYearList);
+  useEffect(() => {
+      fetchMovies();
+  }, [year]); 
+  const handleWheel = (event) => {
+      event.preventDefault();
+      
+      if (event.deltaY >=100 && year < 2024) {
+          // Scrolling down
+          setYear((prevYear) => prevYear + 1); 
+      } else if(year >1908){
+          // Scrolling up
+          setYear((prevYear) => prevYear - 1);
+      }
+      
+  };
 
-    // const year1994 = allMovieList?.filter(movie => movie.year == 1994);
+  useEffect(() => {
+      window.addEventListener('wheel', handleWheel);
+  }, []);
+  const imageBaseUrl = 'https://image.tmdb.org/t/p/w500'; // Adjust size as needed
 
-    // console.log("year1994", year1994);
-    
+    return (
+        <div >
+            
+           <div className="movieList">
+           <h1 style={{textAlign:"center"}}>Movies from {year}</h1>
+           <div className='movieCardsMain'>
+                {movieList.map(movie => (
+                    
+                    <div className="movieCard" key={movie.id}>
+                         {movie.poster_path && (
+                            <img  className='movieImage'
+                                src={`${imageBaseUrl}${movie.poster_path}`} 
+                                alt={movie.title} 
+                            />
+                        )}
+                        <h5>{movie.title}</h5>
+                       <div className='vote_count'> <p>Vote Average:{movie.vote_average}</p>
+                       <p>Vote Count:{movie.vote_count}</p></div>
+                       <p>Release Year : {movie.release_date}</p>
 
-   
-  return (
-    <div className='allMovieMain'>
-        <h1>All Movies List</h1>
-    <div className="cardMain">
-    {
-      allYearList.map((year)=>{
-        return(
-        <>
-          <h1>{year}</h1>
-       <div className="cardSub">
-       {allMovieList.map((movie)=>
-            movie.year == year &&
-            <div className="card">
-              <img src={movie.poster} alt="" />
-              <h2>{movie.title}</h2>
-              <p>{movie.plot}</p>
+                        {/* <p>{movie.overview}</p> */}
+                       
+                    </div>
+                ))}
             </div>
-          )}
-       </div>
-        </>
-        )})
-     }
-    </div>
-    </div>
-  )
-}
+           </div>
+        </div>
+    );
+};
 
 export default AllMovieShows;
