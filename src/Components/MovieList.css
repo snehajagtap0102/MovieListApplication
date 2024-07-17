@@ -1,8 +1,4 @@
-.movieList h1{
-    position: fixed;
-    top: 0;
-    left: 40%;
-}
+
 .vote_count{
     display: flex;
     align-items: center;
@@ -13,9 +9,9 @@
     justify-content: space-between;
     flex-wrap: wrap;
     width: 80%;
-    height: 80vh;
-    overflow-y: scroll;
-    margin: 5rem auto 0 auto;
+    /* height: 80vh;
+    overflow-y: scroll; */
+    margin: 0 auto;
 }
 .movieCard{
     width: 220px;
