@@ -1,32 +1,185 @@
 
-.vote_count{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+
+/* Updated for logo */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000; /* Ensure the logo stays above other content */
 }
-.movieCardsMain{
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    width: 80%;
-    /* height: 80vh;
-    overflow-y: scroll; */
-    margin: 0 auto;
+
+.logo {
+  font-size: 24px;
+  color: red;
 }
-.movieCard{
-    width: 220px;
-    border: 1px solid;
-    padding: 5px;
-    margin-bottom: 10px;
+.main{
+  margin: 110px auto 0; /* Adjust top margin to create space below filter buttons */
+
 }
-.movieImage{
-    width: 100%;
-    height: 100px;
+.no-movies{
+  height: calc(100vh - 180px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-p, h5{
-    margin: 0 ;
-    margin-bottom: 5px !important;
+.movieCardsMain {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  width: 80%;
+  margin: 20px auto 0; /* Adjust top margin to create space below filter buttons */
 }
-p{
-    font-size: 13px;
+
+@media (max-width: 768px) {
+  .movieCardsMain {
+    grid-template-columns: 1fr; /* Single column layout on mobile */
+  }
+
+  .movieCard {
+    width: 100%; /* Full width on mobile */
+    margin: 0 auto !important; /* Center align */
+    max-width: 240px !important;
+  }
+ 
+}
+
+.movieCard {
+  width: 100%;
+  max-width: 220px; /* Maximum width for desktop */
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden; /* Ensure content does not overflow */
+  margin-bottom: 10px; /* Space between cards */
+}
+
+.movieCard:hover {
+  transform: translateY(-5px);
+}
+
+.movieCard img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 8px;
+  /* margin-bottom: 10px; */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.movieCard h5 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.movieCard .vote_count {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.movieCard p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.filter-buttons {
+  position: fixed;
+  top: 52px;
+  background-color: #fff;
+  width: 100%;
+  padding: 10px 0px;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent buttons from wrapping to new lines */
+  z-index: 100; /* Ensure it's above other content */
+}
+
+
+.filterButton {
+  background-color: #fff; /* Default background color */
+  color: #333; /* Default text color */
+  padding: 5px 15px;
+  margin: 0px 5px;
+  display: inline-block;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  font-size: 14px;
+  cursor: pointer;
+  /* border: 1px solid rgba(0, 0, 0, 0.5); */
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5); /* Optional: Add shadow effect */
+}
+
+.filterButton.active {
+  background-color: rgb(255, 0, 0); /* Red background color for active button */
+  color: #fff; /* White text color for active button */
+  border-color: rgb(255, 0, 0); /* Red border color for active button */
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow effect */
+}
+
+.filterButton:hover {
+  background-color: #eee; /* Hover background color */
+  color: #333; /* Hover text color */
+  border-color: #ccc; /* Hover border color */
+}
+
+
+.filter-buttons::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+.movieList {
+  padding: 0px 0px;
+}
+
+.movie-year {
+  text-align: center;
+  font-size: 30px; /* Adjusted font size */
+  color: #333;
+  margin-bottom: 5px; /* Reduced margin bottom */
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Adjust as needed */
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  border-top-color: #000000;
+  animation: spin 1s ease-in-out infinite;
+}
+
+.loading-text {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #888;
 }
